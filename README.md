@@ -18,6 +18,7 @@
 - The CSV loading and search functions will be developed using Vue.
 
 ## Notes
+- Within a Vue.js instance, use Axios to retrieve data from the specified CSV file URL, process it, and store store store information in an array.
 - The papaparse library was considered but not used for this implementation.
 
 ## Summary
