@@ -1,0 +1,51 @@
+# ビルド生成物
+build/
+dist/
+*.exe
+*.msi
+*.jar
+*.war
+*.ear
+
+# システムファイル
+.DS_Store
+Thumbs.db
+
+# IDE/エディター関連
+.vscode/
+.idea/
+*.sln
+*.csproj
+*.user
+*.suo
+*.cache
+*.log
+*.tmp
+
+# プログラム言語ごとの設定
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Java
+/target/
+.classpath
+.project
+*.iml
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# テキストエディタ関連
+*.swp
+*.bak
+*.backup
+*.orig
+
+# 個別の設定
+public/__assets/data/

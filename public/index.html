@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>店舗検索サンプル</title>
+
+	<style>
+		.pagination {
+			display: flex;
+			justify-content: center;
+			list-style: none;
+			padding: 0;
+		}
+
+		.pagination li {
+			margin: 0 0.5em;
+		}
+
+		.pagination li.active {
+			font-weight: bold;
+		}
+		.pagination li a {
+			text-decoration: none;
+			color: #000;
+		}
+		.payAu,
+		.payDocomo,
+		.payPayPay,
+		.payRakuten {
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: contain;
+			width: 1.5em;
+			height: 1.5em;
+			display: block;
+			margin: 0 auto;
+		}
+		.payAu {
+			background-image: url(__assets/img/icon_cashless_aupay.svg);
+		}
+		.payDocomo{
+			background-image: url(__assets/img/icon_cashless_dpay.svg);
+		}
+		.payPayPay{
+			background-image: url(__assets/img/icon_cashless_paypay.png);
+		}
+		.payRakuten {
+			background-image: url(__assets/img/icon_cashless_rpay.svg);
+		}
+	</style>
+</head>
+
+<body>
+	<h1>店舗検索サンプル</h1>
+
+	<div id="app">
+
+		<div>
+			<p v-if="loading">読み込み中...</p>
+			<div v-else-if="displayedStoresStatus">
+				<form @submit.prevent="filter">
+					<div>
+						<label for="name">店舗名:</label>
+						<input type="text" id="name" v-model="search.name">
+					</div>
+					<div>
+						<label for="area">エリア:</label>
+						<select id="area" v-model="search.area">
+							<option value="" selected>すべて</option>
+							<option v-for="area in areas" :value="area">{{ area }}</option>
+						</select>
+
+					</div>
+					<div>
+						<label for="address">住所:</label>
+						<input type="text" id="address" v-model="search.address">
+					</div>
+					<div>
+						<label for="genre">ジャンル:</label>
+						<select id="genre" v-model="search.genre">
+							<option value="" selected>すべて</option>
+							<option v-for="genre in genres" :value="genre">{{ genre }}</option>
+						</select>
+					</div>
+					<div>
+						<label for="payAu">au PAY</label>
+						<input type="checkbox" id="payAu" v-model="search.payAu">
+					</div>
+					<div>
+						<label for="pay-docomo">d払い</label>
+						<input id="pay-docomo" type="checkbox" v-model="search.payDocomo">
+					</div>
+					<div>
+						<label for="pay-paypay">PayPay</label>
+						<input id="pay-paypay" type="checkbox" v-model="search.payPayPay">
+					</div>
+					<div>
+						<label for="pay-rakuten">楽天ペイ</label>
+						<input id="pay-rakuten" type="checkbox" v-model="search.payRakuten">
+					</div>
+					<div>
+						<label for="keyword">フリーワード検索</label>
+						<input id="keyword" v-model="search.keyword">
+					</div>
+					<button type="submit">検索</button>
+					<button type="button" @click="resetSearch">リセット</button>
+				</form>
+				<p>検索結果: {{ isFiltered ? filteredStores.length : stores.length }}件</p>
+				<table>
+					<thead>
+						<tr>
+							<th>No.</th>
+							<th>店舗名</th>
+							<th>エリア</th>
+							<th>住所</th>
+							<th>ジャンル</th>
+							<th>au PAY</th>
+							<th>d払い</th>
+							<th>PayPay</th>
+							<th>楽天ペイ</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr v-for="(store, index) in displayedStores" :key="index">
+							<td>{{ store.id }}</td>
+							<td>{{ store.name }}</td>
+							<td>{{ store.area }}</td>
+							<td>{{ store.address }}</td>
+							<td>{{ store.genre }}</td>
+							<td>
+								<p v-if="store.payAu" class="payAu"></p>
+							</td>
+							<td>
+								<p v-if="store.payDocomo" class="payDocomo"></p>
+							</td>
+							<td>
+								<p v-if="store.payPayPay" class="payPayPay"></p>
+							</td>
+							<td>
+								<p v-if="store.payRakuten" class="payRakuten"></p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<ul class="pagination">
+					<li v-if="currentPage > 1">
+						<a @click.prevent="changePage(currentPage - 1)" href="#">前へ</a>
+					</li>
+					<li v-for="page in pages" :key="page" :class="{ active: page === currentPage }">
+						<template v-if="page.text">
+							<span :class="{ disabled: page.disabled }">{{ page.text }}</span>
+						</template>
+						<template v-else>
+							<a @click.prevent="changePage(page)" href="#">{{ page }}</a>
+						</template>
+					</li>
+					<li v-if="pages[pages.length - 1] !== pageCount">
+						<span>...</span>
+					</li>
+					<li v-if="currentPage < pageCount">
+						<a @click.prevent="changePage(currentPage + 1)" href="#">次へ</a>
+					</li>
+				</ul>
+				<p>{{ currentPage }}ページ目/{{ pageCount }}ページ中</p>
+			</div>
+			<p v-else>検索結果がありません</p>
+		</div>
+	</div>
+
+	<script src="__assets/js/vue@2.6.14.min.js"></script>
+	<script src="__assets/js/axios.min.js"></script>
+	<!-- <script src="__assets/js/papaparse.min.js"></script> -->
+	<script type="text/javascript" src="__assets/js/sample.js"></script>
+
+</body>
+
+</html>
