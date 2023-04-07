@@ -1,26 +1,25 @@
-# Vue（CDN版）でCSVファイル（店舗リスト）の読み込み、表示、検索機能を実装
+# Implementing a CSV file (store list) loading, display, and search functionality using Vue (CDN version)
 
-## 要件定義
-- 某自治体様よりキャッシュレスキャンペーンWEBサイトを作りたい
-- 大量の店舗リストデータをCSVで用意するのでリストに表示したい
-- 各種項目にて複合検索したい
-- 過去の実績では約10万件の店舗リストの表示が遅く、ロードに時間がかかったようで改善したい
+## Requirements
+- A local government agency wants to create a cashless campaign website
+- They have prepared a large store list data in CSV format that needs to be displayed on the website
+- They require a search function for the various fields in the store list
+- Previous implementations with around 100,000 store lists showed slow loading times, so they want to improve the performance.
 
-## 基本設計
+## Basic Design
 
-### 非機能要件
-- 共用レンタルサーバー（node.js）が使用できないサーバーを使用している（そのまま継続）
-- 元請けがnode.jsでの開発環境構築ができない（知識がない）
+### Non-functional requirements
+- The project needs to use a shared rental server that does not support node.js.
+- The main contractor does not have the knowledge to set up a development environment with node.js.
 
-### 機能要件
-- 既存ページはJQueryが使用されているので、Vueを導入しSPAにて実装
-- 諸事情よりVueはCDN版を使用（ダウンロードしてローカル開発）
-- CSVの読み込み、検索機能をVueで開発
+### Functional requirements
+- The existing page uses jQuery, so the implementation will use Vue and build it as a single-page application.
+- The Vue CDN version will be used as node.js is not an option for the development environment.
+- The CSV loading and search functions will be developed using Vue.
 
-## 補足
-- papaparseのライブラリを使用しようと思ったが、今回は使用せず実装
+## Notes
+- The papaparse library was considered but not used for this implementation.
 
-## まとめ
-CDNで読み込むより、node.jsでローカル開発の環境構築ができるようにし、Vueをインストール。ビルドした静的ファイルを共用レンタルサーバーに置く方が開発コストが少なくて済むのでは？ローカル開発環境の構築を誰でもできるようにコマンド等を残すのが結果的に良かった気がする
-
+## Summary
+The decision was made to use the Vue CDN version as it is easier to implement and requires less development cost than setting up a local development environment with node.js. To enable anyone to set up the local development environment easily, commands and other information will be provided. The static files generated from the build will be uploaded to the shared rental server.
 
