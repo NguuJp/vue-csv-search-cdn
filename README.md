@@ -22,5 +22,4 @@
 - The papaparse library was considered but not used for this implementation.
 
 ## Summary
-The decision was made to use the Vue CDN version as it is easier to implement and requires less development cost than setting up a local development environment with node.js. To enable anyone to set up the local development environment easily, commands and other information will be provided. The static files generated from the build will be uploaded to the shared rental server.
-
+Rather than loading from CDN, setting up a local development environment with node.js and installing Vue would require less development cost. Putting the built static files on a shared rental server would be better. Leaving commands and other information to enable anyone to set up the local development environment would be beneficial in the end.
